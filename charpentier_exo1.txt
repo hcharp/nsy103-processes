@@ -1,0 +1,10 @@
+On a besoin de la bibliothèque stdio pour l'affichage à l'écran, de unistd pour les appels de fonctions POSIX (fork), et de sys/types pour (? rien de ce programme ?)
+
+On entre dans le main, et, successivement :
+- un processus fils est créé avec fork();
+- le message "fork(1)" s'affiche et passe à la ligne
+- un processus fils est créé avec fork();
+- le message "fork(2)" s'affiche et passe à la ligne
+- un processus fils est créé avec fork();
+- le message "fork(3)" s'affiche et passe à la ligne
+- le programme renvoie la valeur 0

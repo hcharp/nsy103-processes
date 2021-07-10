@@ -1,0 +1,59 @@
+/*
+Un processus zombie est un processus qui s'est achevé mais qui reste toujours visible dans la table
+des processus.
+Avec la commande "ps a" lancée dans une terminal et un programme contenant les fonction sleep et
+wait lancé dans un autre terminal, observez un processus zombie.
+*/
+
+Avant de lancer le programme (ex4 contient sleep et wait) :
+
+    hperso@Mac-helene ~ % ps a
+      PID   TT  STAT      TIME COMMAND
+    1651 s000  Ss+    0:00.07 /bin/zsh -l
+    1686 s001  Ss     0:00.05 login -pf hperso
+    1687 s001  S      0:00.07 -zsh
+    1699 s001  R+     0:00.00 ps a
+    1692 s002  Ss     0:00.02 login -pf hperso
+    1693 s002  S+     0:00.07 -zsh
+
+Programme ex4 lancé :
+
+    hperso@Mac-helene ~ % ps a
+      PID   TT  STAT      TIME COMMAND
+    1651 s000  Ss+    0:00.07 /bin/zsh -l
+    1686 s001  Ss     0:00.05 login -pf hperso
+    1687 s001  S      0:00.08 -zsh
+    1713 s001  R+     0:00.00 ps a
+    1692 s002  Ss     0:00.02 login -pf hperso
+    1693 s002  S      0:00.10 -zsh
+    1711 s002  S+     0:00.00 ./ex4 <<-- 1ère fois, PID 1711
+    1712 s002  S+     0:00.00 ./ex4 <<-- 2ème fois, PID 1712
+
+Normalement, je devrais avoir un 'Z' dans la colonne STAT, mais je n'arrive pas à l'observer.
+À la place, j'ai S (en sommeil).
+
+
+Après que le programme ex4 soit terminé : 
+
+    hperso@Mac-helene ~ % ps a
+      PID   TT  STAT      TIME COMMAND
+    1651 s000  Ss+    0:00.07 /bin/zsh -l
+    1686 s001  Ss     0:00.05 login -pf hperso
+    1687 s001  S      0:00.08 -zsh
+    1714 s001  R+     0:00.00 ps a
+    1692 s002  Ss     0:00.02 login -pf hperso
+    1693 s002  S+     0:00.11 -zsh
+
+Avec un programme qui n'a ni wait ni sleep (l'ex3, mais avec une boucle sur 40 itérations pour avoir le temps de capturer):
+
+    hperso@Mac-helene ~ % ps a
+      PID   TT  STAT      TIME COMMAND
+    1651 s000  Ss+    0:00.07 /bin/zsh -l
+    1686 s001  Ss     0:00.05 login -pf hperso
+    1687 s001  S      0:00.08 -zsh
+    1755 s001  R+     0:00.00 ps a
+    1692 s002  Ss     0:00.02 login -pf hperso
+    1693 s002  S      0:00.12 -zsh
+    1754 s002  S+     0:00.00 ./ex3 <<-- une seule fois
+
+    
